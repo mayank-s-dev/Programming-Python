@@ -1,14 +1,18 @@
-binary_str = "101"
-strr = ""
-for j in range(0, 2):
-    for i in range(0, len(binary_str)):
-        if binary_str[i] == '0':
-            strr += "01"
-        else:
-            strr += "10"
+class Solution(object):
+    def removeDuplicates(self, s, k):
+        size = len(s)
+        count = 1
+        for i in range(1, len(s)):
+            if s[i] == s[i - 1]:
+                count += 1
+            elif s[i] != s[i - 1]:
+                count = 1
 
-    binary_str = strr
-    strr = ""
+        if count == k:
+            # found duplicates to remove
+            s = s.replace(s[i - k + 1:i + 1], "")
+            # backpropagation returned string
+            return self.removeDuplicates(s, k)
+        # loop exits, no duplicates, backpropagation this guy up the recursive stack
 
-print(binary_str)
-
+        return s
