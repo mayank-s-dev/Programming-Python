@@ -1,18 +1,13 @@
-class Solution(object):
-    def removeDuplicates(self, s, k):
-        size = len(s)
-        count = 1
-        for i in range(1, len(s)):
-            if s[i] == s[i - 1]:
-                count += 1
-            elif s[i] != s[i - 1]:
-                count = 1
-
-        if count == k:
-            # found duplicates to remove
-            s = s.replace(s[i - k + 1:i + 1], "")
-            # backpropagation returned string
-            return self.removeDuplicates(s, k)
-        # loop exits, no duplicates, backpropagation this guy up the recursive stack
-
-        return s
+class Solution:
+    def toh(self, N, fromm, to, aux):
+        if(N == 1):
+            print("move disk " + str(N) + " from rod " + str(fromm) + " to rod " + str(to))
+            return 1
+        # recursive call to move top disk from "from" to aux in current call
+        moves = 0
+        moves += self.toh(N - 1, fromm, aux, to)
+        moves += 1 # increment moves
+        print("move disk " + str(N) + " from rod " + str(fromm) + " to rod " + str(to))
+        #recursive call to move top disk from aux to "to" in current call
+        moves += self.toh(N - 1, aux, to, fromm)
+        return moves
