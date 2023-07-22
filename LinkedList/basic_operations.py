@@ -90,26 +90,64 @@ class LinkedList:
 
         prev.next = None
 
-    
+    def reverseKGroup(self, head, k: int):
+        # Code here
+        if head is None or k == 0:
+            return head
 
+        stack = []
+        curr = head
+        count = 0
+        new_head = None
+        new_curr = None
+        while curr:
+            stack.append(curr)
+            temp = curr.next
+            count += 1
+            if count == k:
+                while len(stack) > 0:
+                    n = stack.pop()
+                    # print(n.data)
+                    if new_head == None:
+                        new_curr = n
+                        new_head = new_curr
+                    else:
+                        new_curr.next = n
+                        new_curr = new_curr.next
+
+                count = 0
+
+            curr = temp
+
+        while len(stack) > 0:
+            n = stack.pop()
+            n.next = None
+            if new_head == None:
+                new_curr = n
+                new_head = new_curr
+            else:
+                new_curr.next = n
+                new_curr = new_curr.next
+        return new_head
 # Create a linked list object
 llist = LinkedList()
 
 # Add new nodes to the linked list
-llist.push(500)
-llist.push(30)
-llist.push(11)
-llist.push(21)
-llist.push(14)
+llist.push(5)
+llist.push(4)
+llist.push(3)
+llist.push(2)
+llist.push(1)
 
 # print(llist.find(500))
-llist.insert_at_end(90)
-llist.insert_after_key(21, 22)
-llist.delete_from_beginning()
-llist.delete_from_end()
-llist.delete_from_end()
-llist.delete_specific_key(500)
-temp = llist.head
-while temp:
-    print(temp.data)
-    temp = temp.next
+# llist.insert_at_end(90)
+# llist.insert_after_key(21, 22)
+# llist.delete_from_beginning()
+# llist.delete_from_end()
+# llist.delete_from_end()
+# llist.delete_specific_key(500)
+r = llist.reverseKGroup(llist.head, 2)
+# temp = llist.head
+while r:
+    print(r.data)
+    r = r.next
